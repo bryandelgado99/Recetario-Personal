@@ -1,0 +1,96 @@
+---
+export interface Props {
+  steps: string[];
+  title?: string;
+}
+
+const { steps, title = "Preparación" } = Astro.props;
+---
+
+<section class="steps-section">
+  <h2 class="section-title">{title}</h2>
+  <ol class="steps-list">
+    {steps.map((step, index) => (
+      <li class="step-item">
+        <div class="step-number">{index + 1}</div>
+        <div class="step-content">
+          <p class="step-text">{step}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .steps-section {
+    margin-bottom: 2rem;
+  }
+
+  .section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #8b7355;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #d4a574;
+  }
+
+  .steps-list {
+    list-style: none;
+    counter-reset: step-counter;
+  }
+
+  .step-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(212, 165, 116, 0.15);
+    border-left: 4px solid #d4a574;
+  }
+
+  .step-number {
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: linear-gradient(135deg, #d4a574 0%, #c49363 100%);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-right: 1rem;
+    font-family: 'Poppins', sans-serif;
+    box-shadow: 0 2px 8px rgba(212, 165, 116, 0.3);
+  }
+
+  .step-content {
+    flex: 1;
+  }
+
+  .step-text {
+    font-size: 1rem;
+    color: #4a5568;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .step-item {
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .step-number {
+      width: 2rem;
+      height: 2rem;
+      font-size: 1rem;
+      margin-right: 0.75rem;
+    }
+  }
+</style>

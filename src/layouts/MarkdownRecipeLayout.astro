@@ -1,0 +1,156 @@
+---
+import RecipeLayout from './RecipeLayout.astro';
+import IngredientsList from '../components/IngredientsList.astro';
+import RecipeSteps from '../components/RecipeSteps.astro';
+import RecipeNotes from '../components/RecipeNotes.astro';
+
+const { frontmatter, headings } = Astro.props;
+const { 
+  title, 
+  description, 
+  prepTime, 
+  cookTime, 
+  servings, 
+  difficulty, 
+  image, 
+  tags,
+  ingredients = [],
+  steps = [],
+  notes = [],
+  notesType = 'tip'
+} = frontmatter;
+
+// Función para procesar arrays desde frontmatter
+function processArray(arr: any) {
+  if (!arr) return [];
+  if (Array.isArray(arr)) return arr;
+  if (typeof arr === 'string') {
+    // Si es un string con saltos de línea, dividir por líneas
+    return arr.split('\n').map(item => item.trim()).filter(item => item.length > 0);
+  }
+  return [];
+}
+
+const processedIngredients = processArray(ingredients);
+const processedSteps = processArray(steps);
+const processedNotes = processArray(notes);
+
+// Procesar la imagen - usar ruta desde public/images/
+let processedImage = image;
+if (image && typeof image === 'string' && !image.startsWith('http')) {
+  // Si no es una URL externa, asumir que está en public/images/
+  processedImage = `/images/${image}`;
+}
+---
+
+<RecipeLayout
+  title={title}
+  description={description}
+  prepTime={prepTime}
+  cookTime={cookTime}
+  servings={servings}
+  difficulty={difficulty}
+  image={processedImage}
+  tags={tags}
+>
+  {processedIngredients.length > 0 && (
+    <IngredientsList ingredients={processedIngredients} />
+  )}
+  
+  {processedSteps.length > 0 && (
+    <RecipeSteps steps={processedSteps} />
+  )}
+  
+  <!-- Contenido del markdown -->
+  <div class="markdown-content">
+    <slot />
+  </div>
+  
+  {processedNotes.length > 0 && (
+    <RecipeNotes notes={processedNotes} type={notesType} />
+  )}
+</RecipeLayout>
+
+<style>
+  .markdown-content {
+    margin: 2rem 0;
+  }
+
+  .markdown-content :global(h1),
+  .markdown-content :global(h2),
+  .markdown-content :global(h3) {
+    color: #2c3e50;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  .markdown-content :global(h2) {
+    font-size: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e67e22;
+  }
+
+  .markdown-content :global(h3) {
+    font-size: 1.25rem;
+  }
+
+  .markdown-content :global(p) {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+    color: #2c3e50;
+  }
+
+  .markdown-content :global(ul),
+  .markdown-content :global(ol) {
+    margin-bottom: 1rem;
+    padding-left: 2rem;
+  }
+
+  .markdown-content :global(li) {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+  }
+
+  .markdown-content :global(blockquote) {
+    border-left: 4px solid #e67e22;
+    padding-left: 1rem;
+    margin: 1.5rem 0;
+    font-style: italic;
+    color: #666;
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 0 8px 8px 0;
+  }
+
+  .markdown-content :global(code) {
+    background: #f1f3f4;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+  }
+
+  .markdown-content :global(pre) {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1rem 0;
+  }
+
+  .markdown-content :global(pre code) {
+    background: none;
+    padding: 0;
+  }
+
+  .markdown-content :global(strong) {
+    font-weight: 600;
+    color: #2c3e50;
+  }
+
+  .markdown-content :global(em) {
+    font-style: italic;
+    color: #666;
+  }
+</style>

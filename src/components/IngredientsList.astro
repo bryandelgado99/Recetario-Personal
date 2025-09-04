@@ -1,0 +1,79 @@
+---
+export interface Props {
+  ingredients: string[];
+  title?: string;
+}
+
+const { ingredients, title = "Ingredientes" } = Astro.props;
+---
+
+<section class="ingredients-section">
+  <h2 class="section-title">{title}</h2>
+  <ul class="ingredients-list">
+    {ingredients.map(ingredient => (
+      <li class="ingredient-item">
+        <span class="ingredient-text">{ingredient}</span>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .ingredients-section {
+    margin-bottom: 2rem;
+  }
+
+  .section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #8b7355;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #d4a574;
+  }
+
+  .ingredients-list {
+    list-style: none;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid rgba(186, 230, 253, 0.5);
+  }
+
+  .ingredient-item {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(186, 230, 253, 0.3);
+    position: relative;
+  }
+
+  .ingredient-item:last-child {
+    border-bottom: none;
+  }
+
+  .ingredient-item::before {
+    content: "✓";
+    color: #9ae6b4;
+    font-weight: bold;
+    margin-right: 0.75rem;
+    font-size: 1.1rem;
+  }
+
+  .ingredient-text {
+    font-size: 1rem;
+    color: #4a5568;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 768px) {
+    .ingredients-list {
+      padding: 1rem;
+    }
+
+    .ingredient-item {
+      padding: 0.5rem 0;
+    }
+  }
+</style>

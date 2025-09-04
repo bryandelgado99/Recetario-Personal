@@ -1,16 +1,343 @@
 ---
+// Obtener todas las recetas desde los archivos markdown
+const allRecipes = await Astro.glob("./recetas/*.md");
 
+// Procesar las recetas para extraer la información necesaria
+const recipes = allRecipes
+  .map((recipe) => {
+    const { frontmatter, url } = recipe;
+    const totalTime =
+      frontmatter.prepTime && frontmatter.cookTime
+        ? `${parseInt(frontmatter.prepTime) + parseInt(frontmatter.cookTime)} min`
+        : frontmatter.prepTime || frontmatter.cookTime || "No especificado";
+
+    // Procesar la imagen - usar ruta desde public/images/
+    let processedImage = frontmatter.image;
+    if (
+      frontmatter.image &&
+      typeof frontmatter.image === "string" &&
+      !frontmatter.image.startsWith("http")
+    ) {
+      // Si no es una URL externa, asumir que está en public/images/
+      processedImage = `/images/${frontmatter.image}`;
+    }
+
+    return {
+      title: frontmatter.title,
+      description: frontmatter.description,
+      url: url,
+      difficulty: frontmatter.difficulty || "No especificado",
+      time: totalTime,
+      tags: frontmatter.tags || [],
+      prepTime: frontmatter.prepTime,
+      cookTime: frontmatter.cookTime,
+      servings: frontmatter.servings,
+      image: processedImage,
+    };
+  })
+  .sort((a, b) => a.title.localeCompare(b.title)); // Ordenar alfabéticamente
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi Recetario Personal</title>
+    <meta
+      name="description"
+      content="Colección personal de recetas favoritas"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="main-header">
+      <div class="container">
+        <h1 class="site-title">🍳 Mi Recetario Personal</h1>
+        <p class="site-description">Una colección de mis recetas favoritas</p>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <div class="container">
+        <section class="recipes-grid">
+          {
+            recipes.map((recipe) => (
+              <article class="recipe-card">
+                {recipe.image && (
+                  <div class="recipe-card-image">
+                    <img src={recipe.image} alt={recipe.title} />
+                  </div>
+                )}
+                <div class="recipe-card-content">
+                  <h2 class="recipe-title">
+                    <a href={recipe.url}>{recipe.title}</a>
+                  </h2>
+                  <p class="recipe-description">{recipe.description}</p>
+
+                  <div class="recipe-meta">
+                    <span class="recipe-time">⏱️ {recipe.time}</span>
+                    <span
+                      class={`recipe-difficulty difficulty-${recipe.difficulty.toLowerCase()}`}
+                    >
+                      📊 {recipe.difficulty}
+                    </span>
+                  </div>
+
+                  <div class="recipe-tags">
+                    {recipe.tags.map((tag: unknown) => (
+                      <span class="tag">{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))
+          }
+        </section>
+
+        {
+          recipes.length === 0 && (
+            <div class="empty-state">
+              <h2>¡Bienvenido a tu recetario!</h2>
+              <p>Aún no hay recetas. Comienza creando tu primera receta.</p>
+            </div>
+          )
+        }
+      </div>
+    </main>
+
+    <footer class="main-footer">
+      <div class="container">
+        <p>&copy; Paul Delgado</p>
+      </div>
+    </footer>
+  </body>
 </html>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family:
+      "Nunito",
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      sans-serif;
+    line-height: 1.6;
+    color: #4a5568;
+    background: linear-gradient(135deg, #fef7f0 0%, #f7fafc 100%);
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .main-header {
+    background: linear-gradient(135deg, #d4a574 0%, #c49363 100%);
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .main-header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    pointer-events: none;
+  }
+
+  .site-title {
+    font-family: "Poppins", sans-serif;
+    font-size: 3.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .site-description {
+    font-size: 1.3rem;
+    opacity: 0.95;
+    position: relative;
+    z-index: 1;
+  }
+
+  .main-content {
+    padding: 3rem 0;
+    min-height: 60vh;
+  }
+
+  .recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+
+  .recipe-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(212, 165, 116, 0.15);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(241, 194, 167, 0.3);
+    backdrop-filter: blur(10px);
+  }
+
+  .recipe-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(212, 165, 116, 0.25);
+  }
+
+  .recipe-card-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+  }
+
+  .recipe-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .recipe-card:hover .recipe-card-image img {
+    transform: scale(1.05);
+  }
+
+  .recipe-card-content {
+    padding: 2rem;
+  }
+
+  .recipe-title {
+    margin-bottom: 1rem;
+  }
+
+  .recipe-title a {
+    color: #8b7355;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 600;
+    font-family: "Poppins", sans-serif;
+    transition: color 0.3s ease;
+  }
+
+  .recipe-title a:hover {
+    color: #d4a574;
+  }
+
+  .recipe-description {
+    color: #718096;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+  }
+
+  .recipe-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .recipe-time {
+    color: #8b7355;
+  }
+
+  .recipe-difficulty {
+    font-weight: 500;
+    font-family: "Poppins", sans-serif;
+  }
+
+  .difficulty-fácil {
+    color: #9ae6b4;
+  }
+
+  .difficulty-intermedio {
+    color: #f6ad55;
+  }
+
+  .difficulty-difícil {
+    color: #fc8181;
+  }
+
+  .recipe-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    background: linear-gradient(135deg, #d4a574 0%, #c49363 100%);
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 25px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    font-family: "Poppins", sans-serif;
+    box-shadow: 0 2px 8px rgba(212, 165, 116, 0.3);
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #718096;
+  }
+
+  .empty-state h2 {
+    font-family: "Poppins", sans-serif;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #8b7355;
+  }
+
+  .main-footer {
+    background: linear-gradient(135deg, #6b5b73 0%, #553c9a 100%);
+    color: white;
+    padding: 2rem 0;
+    text-align: center;
+    margin-top: 3rem;
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      padding: 0 1rem;
+    }
+
+    .site-title {
+      font-size: 2rem;
+    }
+
+    .recipes-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .recipe-card-content {
+      padding: 1.5rem;
+    }
+
+    .main-content {
+      padding: 2rem 0;
+    }
+  }
+</style>
