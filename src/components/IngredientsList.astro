@@ -1,21 +1,44 @@
 ---
 export interface Props {
-  ingredients: string[];
+  ingredients: string[] | any;
   title?: string;
 }
 
 const { ingredients, title = "Ingredientes" } = Astro.props;
+
+// Función para determinar si los ingredientes están agrupados por secciones
+const isGrouped = ingredients && typeof ingredients === 'object' && !Array.isArray(ingredients);
 ---
 
 <section class="ingredients-section">
   <h2 class="section-title">{title}</h2>
-  <ul class="ingredients-list">
-    {ingredients.map(ingredient => (
-      <li class="ingredient-item">
-        <span class="ingredient-text">{ingredient}</span>
-      </li>
-    ))}
-  </ul>
+  
+  {isGrouped ? (
+    <!-- Ingredientes agrupados por secciones -->
+    <div class="ingredients-groups">
+      {Object.entries(ingredients).map(([sectionName, sectionIngredients]) => (
+        <div class="ingredient-group">
+          <h3 class="group-title">{sectionName}</h3>
+          <ul class="ingredients-list">
+            {(sectionIngredients as string[]).filter((ing: string) => ing && ing.trim() !== '').map((ingredient: string) => (
+              <li class="ingredient-item">
+                <span class="ingredient-text">{ingredient}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  ) : (
+    <!-- Lista simple de ingredientes -->
+    <ul class="ingredients-list">
+      {ingredients.map((ingredient: string) => (
+        <li class="ingredient-item">
+          <span class="ingredient-text">{ingredient}</span>
+        </li>
+      ))}
+    </ul>
+  )}
 </section>
 
 <style>
@@ -33,12 +56,42 @@ const { ingredients, title = "Ingredientes" } = Astro.props;
     border-bottom: 2px solid #d4a574;
   }
 
+  .ingredients-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .ingredient-group {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid rgba(186, 230, 253, 0.5);
+  }
+
+  .group-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #6b7280;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(186, 230, 253, 0.5);
+  }
+
   .ingredients-list {
     list-style: none;
     background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
     border-radius: 16px;
     padding: 1.5rem;
     border: 1px solid rgba(186, 230, 253, 0.5);
+  }
+
+  .ingredient-group .ingredients-list {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
   }
 
   .ingredient-item {
@@ -72,8 +125,16 @@ const { ingredients, title = "Ingredientes" } = Astro.props;
       padding: 1rem;
     }
 
+    .ingredient-group {
+      padding: 1rem;
+    }
+
     .ingredient-item {
       padding: 0.5rem 0;
+    }
+
+    .ingredients-groups {
+      gap: 1rem;
     }
   }
 </style>

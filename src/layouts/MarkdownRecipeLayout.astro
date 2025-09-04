@@ -31,8 +31,62 @@ function processArray(arr: any) {
   return [];
 }
 
-const processedIngredients = processArray(ingredients);
-const processedSteps = processArray(steps);
+// Función para procesar ingredientes (puede ser array simple o objeto con secciones)
+function processIngredients(ingredients: any) {
+  if (!ingredients) return [];
+  
+  // Si es un array simple, procesarlo como antes
+  if (Array.isArray(ingredients)) {
+    return processArray(ingredients);
+  }
+  
+  // Si es un objeto, asumir que son secciones de ingredientes
+  if (typeof ingredients === 'object') {
+    const processed: Record<string, string[]> = {};
+    
+    for (const [sectionName, sectionIngredients] of Object.entries(ingredients)) {
+      if (Array.isArray(sectionIngredients)) {
+        processed[sectionName] = sectionIngredients.filter(item => 
+          typeof item === 'string' && item.trim() !== ''
+        );
+      }
+    }
+    
+    return processed;
+  }
+  
+  return [];
+}
+
+// Función para procesar pasos (puede ser array simple o objeto con secciones)
+function processSteps(steps: any) {
+  if (!steps) return [];
+  
+  // Si es un array simple, procesarlo como antes
+  if (Array.isArray(steps)) {
+    return processArray(steps);
+  }
+  
+  // Si es un objeto, asumir que son secciones de pasos
+  if (typeof steps === 'object') {
+    const processed: Record<string, string[]> = {};
+    
+    for (const [sectionName, sectionSteps] of Object.entries(steps)) {
+      if (Array.isArray(sectionSteps)) {
+        processed[sectionName] = sectionSteps.filter(item => 
+          typeof item === 'string' && item.trim() !== ''
+        );
+      }
+    }
+    
+    return processed;
+  }
+  
+  return [];
+}
+
+const processedIngredients = processIngredients(ingredients);
+const processedSteps = processSteps(steps);
 const processedNotes = processArray(notes);
 
 // Procesar la imagen - usar ruta desde public/images/
@@ -53,11 +107,11 @@ if (image && typeof image === 'string' && !image.startsWith('http')) {
   image={processedImage}
   tags={tags}
 >
-  {processedIngredients.length > 0 && (
+  {(Array.isArray(processedIngredients) ? processedIngredients.length > 0 : Object.keys(processedIngredients).length > 0) && (
     <IngredientsList ingredients={processedIngredients} />
   )}
   
-  {processedSteps.length > 0 && (
+  {(Array.isArray(processedSteps) ? processedSteps.length > 0 : Object.keys(processedSteps).length > 0) && (
     <RecipeSteps steps={processedSteps} />
   )}
   

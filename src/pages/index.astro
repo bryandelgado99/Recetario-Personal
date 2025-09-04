@@ -63,6 +63,17 @@ const recipes = allRecipes
       </div>
     </header>
 
+    <nav class="main-nav">
+      <div class="container">
+        <div class="nav-links">
+          <a href="/tecnicas" class="nav-link">
+            <span class="nav-icon">📚</span>
+            <span class="nav-text">Técnicas y Consejos</span>
+          </a>
+        </div>
+      </div>
+    </nav>
+
     <main class="main-content">
       <div class="container">
         <section class="recipes-grid">
@@ -113,7 +124,7 @@ const recipes = allRecipes
 
     <footer class="main-footer">
       <div class="container">
-        <p>&copy; Paul Delgado</p>
+        <p>&copy; 2025, Paul Delgado</p>
       </div>
     </footer>
   </body>
@@ -180,6 +191,47 @@ const recipes = allRecipes
     opacity: 0.95;
     position: relative;
     z-index: 1;
+  }
+
+  .main-nav {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212, 165, 116, 0.2);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #8b7355;
+    text-decoration: none;
+    font-weight: 500;
+    font-family: "Poppins", sans-serif;
+    padding: 0.75rem 1.5rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    background: rgba(212, 165, 116, 0.1);
+  }
+
+  .nav-link:hover {
+    background: linear-gradient(135deg, #d4a574 0%, #c49363 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(212, 165, 116, 0.3);
+  }
+
+  .nav-icon {
+    font-size: 1.2rem;
   }
 
   .main-content {

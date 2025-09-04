@@ -5,10 +5,12 @@ Un blog de recetas personal construido con Astro que permite crear recetas fáci
 ## 🚀 Características
 
 - **Recetas en Markdown**: Escribe recetas usando archivos `.md` simples
-- **Layout automático**: Las recetas se renderizan automáticamente con un diseño profesional
+- **Técnicas y Consejos**: Sección dedicada a guías culinarias reutilizables
+- **Layout automático**: Las recetas y técnicas se renderizan automáticamente con diseño profesional
 - **Componentes reutilizables**: Ingredientes, pasos y notas se muestran de forma consistente
+- **Enlaces cruzados**: Vincula técnicas desde las recetas y viceversa
 - **Responsive**: Funciona perfectamente en móviles y escritorio
-- **Índice automático**: La página principal se actualiza automáticamente con nuevas recetas
+- **Índices automáticos**: Las páginas principales se actualizan automáticamente
 
 ## 📁 Estructura del Proyecto
 
@@ -16,27 +18,43 @@ Un blog de recetas personal construido con Astro que permite crear recetas fáci
 src/
 ├── layouts/
 │   ├── RecipeLayout.astro          # Layout base para recetas
-│   └── MarkdownRecipeLayout.astro  # Layout específico para Markdown
+│   ├── MarkdownRecipeLayout.astro  # Layout específico para recetas MD
+│   └── TechniqueLayout.astro       # Layout para técnicas culinarias
 ├── components/
 │   ├── IngredientsList.astro       # Componente para ingredientes
 │   ├── RecipeSteps.astro           # Componente para pasos
 │   └── RecipeNotes.astro           # Componente para notas y consejos
 └── pages/
-    ├── index.astro                 # Página principal con índice
-    └── recetas/
-        ├── _template.md            # Plantilla para nuevas recetas
-        ├── pasta-carbonara.md      # Ejemplo de receta
-        └── tortilla-espanola.md    # Otro ejemplo
+    ├── index.astro                 # Página principal con navegación
+    ├── recetas/
+    │   └── pie-de-limon.md         # Ejemplo de receta
+    └── tecnicas/
+        ├── index.astro             # Índice de técnicas
+        ├── activar-levadura.md     # Ejemplo de técnica
+        └── punto-nieve.md          # Otro ejemplo
 ```
 
-## ✨ Cómo Crear una Nueva Receta
+## ✨ Cómo Crear Contenido Nuevo
 
-1. **Copia el template**: Duplica el archivo `template-receta.md` (en la raíz del proyecto)
-2. **Muévelo a recetas**: Colócalo en `src/pages/recetas/` con un nombre descriptivo como `mi-nueva-receta.md`
-3. **Actualiza el layout**: Cambia la ruta del layout a `../../layouts/MarkdownRecipeLayout.astro`
-4. **Añade la imagen**: Coloca tu imagen en `src/assets/` (ej: `mi-nueva-receta.jpg`)
-5. **Edita el frontmatter**: Completa la información de la receta
-6. **Añade contenido**: Escribe cualquier información adicional en Markdown
+### 🍳 Nueva Receta
+1. **Copia el template**: Duplica `template-receta.md` (en la raíz del proyecto)
+2. **Muévelo a recetas**: Colócalo en `src/pages/recetas/` con nombre descriptivo
+3. **Actualiza el layout**: Cambia la ruta a `../../layouts/MarkdownRecipeLayout.astro`
+4. **Añade la imagen**: Coloca tu imagen en `public/images/`
+5. **Completa el frontmatter**: Información de la receta
+6. **Escribe el contenido**: Información adicional en Markdown
+
+### 📚 Nueva Técnica Culinaria
+1. **Copia el template**: Duplica `template-tecnica.md` (en la raíz del proyecto)
+2. **Muévelo a técnicas**: Colócalo en `src/pages/tecnicas/` con nombre descriptivo
+3. **Actualiza el layout**: Cambia la ruta a `../../layouts/TechniqueLayout.astro`
+4. **Añade la imagen**: Coloca tu imagen en `public/images/`
+5. **Completa el frontmatter**: Información de la técnica
+6. **Escribe la guía**: Pasos detallados y consejos
+
+### 🔗 Enlaces Cruzados
+- **En recetas**: Referencia técnicas con `[activar levadura](/tecnicas/activar-levadura)`
+- **En técnicas**: Lista recetas relacionadas en el frontmatter `relatedRecipes`
 
 ## 🖼️ Manejo de Imágenes
 

@@ -1,24 +1,56 @@
 ---
 export interface Props {
-  steps: string[];
+  steps: string[] | any;
   title?: string;
 }
 
 const { steps, title = "Preparación" } = Astro.props;
+
+// Función para determinar si los pasos están agrupados por secciones
+const isGrouped = steps && typeof steps === 'object' && !Array.isArray(steps);
 ---
 
 <section class="steps-section">
   <h2 class="section-title">{title}</h2>
-  <ol class="steps-list">
-    {steps.map((step, index) => (
-      <li class="step-item">
-        <div class="step-number">{index + 1}</div>
-        <div class="step-content">
-          <p class="step-text">{step}</p>
-        </div>
-      </li>
-    ))}
-  </ol>
+  
+  {isGrouped ? (
+    <!-- Pasos agrupados por secciones -->
+    <div class="steps-groups">
+      {Object.entries(steps).map(([sectionName, sectionSteps]) => {
+        let stepCounter = 0;
+        return (
+          <div class="step-group">
+            <h3 class="group-title">{sectionName}</h3>
+            <ol class="steps-list">
+              {(sectionSteps as string[]).filter((step: string) => step && step.trim() !== '').map((step: string) => {
+                stepCounter++;
+                return (
+                  <li class="step-item">
+                    <div class="step-number">{stepCounter}</div>
+                    <div class="step-content">
+                      <p class="step-text">{step}</p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
+        );
+      })}
+    </div>
+  ) : (
+    <!-- Lista simple de pasos -->
+    <ol class="steps-list">
+      {steps.map((step: string, index: number) => (
+        <li class="step-item">
+          <div class="step-number">{index + 1}</div>
+          <div class="step-content">
+            <p class="step-text">{step}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  )}
 </section>
 
 <style>
@@ -36,9 +68,36 @@ const { steps, title = "Preparación" } = Astro.props;
     border-bottom: 2px solid #d4a574;
   }
 
+  .steps-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .step-group {
+    background: linear-gradient(135deg, #fefefe 0%, #f8f9fa 100%);
+    border-radius: 16px;
+    padding: 1.5rem;
+    border: 1px solid rgba(212, 165, 116, 0.2);
+  }
+
+  .group-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #8b7355;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(212, 165, 116, 0.3);
+  }
+
   .steps-list {
     list-style: none;
     counter-reset: step-counter;
+  }
+
+  .step-group .steps-list {
+    margin: 0;
   }
 
   .step-item {
@@ -91,6 +150,14 @@ const { steps, title = "Preparación" } = Astro.props;
       height: 2rem;
       font-size: 1rem;
       margin-right: 0.75rem;
+    }
+
+    .step-group {
+      padding: 1rem;
+    }
+
+    .steps-groups {
+      gap: 1.5rem;
     }
   }
 </style>
