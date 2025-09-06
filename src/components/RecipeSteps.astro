@@ -11,8 +11,18 @@ const isGrouped = steps && typeof steps === 'object' && !Array.isArray(steps);
 
 // Función simple para procesar enlaces Markdown
 function processMarkdown(text: string): string {
-  // Procesar enlaces [texto](url)
-  return text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+  // Procesar enlaces [texto](url) y convertir rutas relativas a absolutas
+  return text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, linkText, url) => {
+    // Si la URL empieza con ../, convertirla a ruta absoluta
+    if (url.startsWith('../')) {
+      url = '/' + url.substring(3);
+    }
+    // Si la URL no empieza con / o http, agregarle /
+    else if (!url.startsWith('/') && !url.startsWith('http')) {
+      url = '/' + url;
+    }
+    return `<a href="${url}">${linkText}</a>`;
+  });
 }
 ---
 
