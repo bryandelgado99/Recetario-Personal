@@ -1,1 +1,8 @@
-/* /index.html 200
+# Netlify redirects for Astro static site
+# Handle clean URLs without .html extension
+/tecnicas/activar-levadura /tecnicas/activar-levadura.html 200
+/recetas/* /recetas/:splat.html 200
+/tecnicas/* /tecnicas/:splat.html 200
+
+# Fallback for any other routes
+/* /404.html 404
