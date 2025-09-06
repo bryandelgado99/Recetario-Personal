@@ -1,5 +1,5 @@
 ---
-layout: ./src/layouts/TechniqueLayout.astro
+layout: ../../layouts/TechniqueLayout.astro
 title: "Nombre de la Técnica"
 description: "Descripción breve de qué aprenderás con esta técnica culinaria"
 difficulty: "Básico" # Básico, Intermedio, Avanzado

@@ -1,5 +1,5 @@
 ---
-layout: ./src/layouts/MarkdownRecipeLayout.astro
+layout: ../../layouts/MarkdownRecipeLayout.astro
 title: "Rollos de Canela"
 description: "El rollo de canela, es un tipo de pan dulce creado en la década de 1920 en Suecia y Dinamarca. Suelen llevar glaseado."
 prepTime: "35 min"

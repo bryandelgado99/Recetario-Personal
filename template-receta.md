@@ -1,5 +1,5 @@
 ---
-layout: ./src/layouts/MarkdownRecipeLayout.astro
+layout: ../../layouts/MarkdownRecipeLayout.astro
 title: "Nombre de tu Receta"
 description: "Descripción breve y atractiva de la receta"
 prepTime: "15 min"
