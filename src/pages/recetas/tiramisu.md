@@ -1,5 +1,5 @@
 ---
-layout: ./src/layouts/MarkdownRecipeLayout.astro
+layout: ../../layouts/MarkdownRecipeLayout.astro
 title: "Tiramisú"
 description: "También conocido como “Bagatela toscana”, es un delicioso postre italiano parecido a una natilla. Se puede acompañar con café o té, y es muy bien valorado en muchas partes del mundo."
 prepTime: "40 min"
