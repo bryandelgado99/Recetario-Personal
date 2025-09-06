@@ -5,13 +5,13 @@ description: "Aprende la técnica correcta para activar levadura seca y fresca, 
 difficulty: "Básico"
 category: "Panadería"
 tags: ["Levadura", "Panadería", "Fermentación", "Básico"]
-image: "activar-levadura.jpg"
+image: "activar-levadura.webp"
 relatedRecipes: ["pan-casero", "pizza-italiana"]
 ---
 
 ## ¿Qué es la Activación de Levadura?
 
-La activación de levadura es el proceso de "despertar" las células de levadura dormidas para asegurar que estén vivas y activas antes de añadirlas a tu masa. Este paso es crucial para garantizar una fermentación exitosa.
+La activación de levadura es el proceso de "despertar" las células de levadura dormidas para asegurar que estén vivas y activas antes de añadirlas a tu masa. Este paso es crucial para garantizar una fermentación exitosa. Cabe recalcar que las levaduras son bacterias que facilitan la fermentación de los azúcares en las mezclas con alto contenido de carbohidratos.
 
 ## Tipos de Levadura
 
@@ -32,7 +32,7 @@ La activación de levadura es el proceso de "despertar" las células de levadura
 ### Ingredientes Necesarios
 
 - 1 cucharadita de levadura seca
-- 1/4 taza de agua tibia (37-43°C)
+- 1/4 taza de agua tibia (37-43°C) o leche (si la preparación lo amerita)
 - 1 pizca de azúcar
 
 ### Pasos Detallados
@@ -45,7 +45,7 @@ La activación de levadura es el proceso de "despertar" las células de levadura
 
 2. **Mezcla los ingredientes**
 
-   - Disuelve el azúcar en el agua tibia
+   - Disuelve el azúcar en el agua o leche tibia
    - Espolvorea la levadura sobre la superficie
    - **No revuelvas** inmediatamente
 

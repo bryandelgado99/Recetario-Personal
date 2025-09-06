@@ -8,6 +8,12 @@ const { steps, title = "Preparación" } = Astro.props;
 
 // Función para determinar si los pasos están agrupados por secciones
 const isGrouped = steps && typeof steps === 'object' && !Array.isArray(steps);
+
+// Función simple para procesar enlaces Markdown
+function processMarkdown(text: string): string {
+  // Procesar enlaces [texto](url)
+  return text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+}
 ---
 
 <section class="steps-section">
@@ -28,7 +34,7 @@ const isGrouped = steps && typeof steps === 'object' && !Array.isArray(steps);
                   <li class="step-item">
                     <div class="step-number">{stepCounter}</div>
                     <div class="step-content">
-                      <p class="step-text">{step}</p>
+                      <p class="step-text" set:html={processMarkdown(step)}></p>
                     </div>
                   </li>
                 );
@@ -45,7 +51,7 @@ const isGrouped = steps && typeof steps === 'object' && !Array.isArray(steps);
         <li class="step-item">
           <div class="step-number">{index + 1}</div>
           <div class="step-content">
-            <p class="step-text">{step}</p>
+            <p class="step-text" set:html={processMarkdown(step)}></p>
           </div>
         </li>
       ))}
@@ -137,6 +143,38 @@ const isGrouped = steps && typeof steps === 'object' && !Array.isArray(steps);
     color: #4a5568;
     line-height: 1.6;
     margin: 0;
+  }
+
+  .step-text :global(a) {
+    color: #d4a574;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid transparent;
+    transition: all 0.2s ease;
+  }
+
+  .step-text :global(a:hover) {
+    color: #c49363;
+    border-bottom-color: #c49363;
+  }
+
+  .step-text :global(strong) {
+    font-weight: 600;
+    color: #2d3748;
+  }
+
+  .step-text :global(em) {
+    font-style: italic;
+    color: #4a5568;
+  }
+
+  .step-text :global(code) {
+    background: #f7fafc;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: #2d3748;
   }
 
   @media (max-width: 768px) {

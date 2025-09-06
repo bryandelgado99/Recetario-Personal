@@ -2,105 +2,120 @@
 export interface Props {
   title: string;
   description?: string;
-  difficulty?: 'Básico' | 'Intermedio' | 'Avanzado';
+  difficulty?: "Básico" | "Intermedio" | "Avanzado";
   category?: string;
   image?: string;
   tags?: string[];
   relatedRecipes?: string[];
 }
 
-const { 
-  title, 
-  description, 
-  difficulty = 'Básico',
-  category = 'General',
+const {
+  title,
+  description,
+  difficulty = "Básico",
+  category = "General",
   image,
   tags = [],
-  relatedRecipes = []
+  relatedRecipes = [],
 } = Astro.props;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{title} - Técnicas y Consejos</title>
-  <meta name="description" content={description || `Guía sobre ${title}`}>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-  <header class="technique-header">
-    <nav class="breadcrumb-nav">
-      <div class="container">
-        <a href="/" class="home-link">🏠 Inicio</a>
-        <span class="separator">→</span>
-        <a href="/tecnicas" class="section-link">📚 Técnicas</a>
-        <span class="separator">→</span>
-        <span class="current">{title}</span>
-      </div>
-    </nav>
-  </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} - Técnicas y Consejos</title>
+    <meta name="description" content={description || `Guía sobre ${title}`} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="technique-header">
+      <nav class="breadcrumb-nav">
+        <div class="container">
+          <a href="/" class="home-link">🏠 Inicio</a>
+          <span class="separator">→</span>
+          <a href="/tecnicas" class="section-link">📚 Técnicas</a>
+          <span class="separator">→</span>
+          <span class="current">{title}</span>
+        </div>
+      </nav>
+    </header>
 
-  <main class="technique-container">
-    <article class="technique">
-      <header class="technique-info">
-        <div class="technique-header-content">
-          {image && (
-            <div class="technique-image-header">
-              <img src={image} alt={title} />
-            </div>
-          )}
-          
-          <div class="technique-meta">
-            <div class="technique-category">{category}</div>
-            <h1 class="technique-title">{title}</h1>
-            
-            {description && (
-              <p class="technique-description">{description}</p>
-            )}
+    <main class="technique-container">
+      <article class="technique">
+        <header class="technique-info">
+          <div class="technique-header-content">
+            {
+              image && (
+                <div class="technique-image-header">
+                  <img src={image} alt={title} />
+                </div>
+              )
+            }
 
-            <div class="technique-stats">
-              <div class="stat">
-                <span class="stat-label">Dificultad:</span>
-                <span class={`stat-value difficulty-${difficulty.toLowerCase()}`}>
-                  {difficulty}
-                </span>
+            <div class="technique-meta">
+              <div class="technique-category">{category}</div>
+              <h1 class="technique-title">{title}</h1>
+
+              {
+                description && (
+                  <p class="technique-description">{description}</p>
+                )
+              }
+
+              <div class="technique-stats">
+                <div class="stat">
+                  <span class="stat-label">Dificultad:</span>
+                  <span
+                    class={`stat-value difficulty-${difficulty.toLowerCase()}`}
+                  >
+                    {difficulty}
+                  </span>
+                </div>
               </div>
-            </div>
 
-            {tags.length > 0 && (
-              <div class="technique-tags">
-                {tags.map(tag => (
-                  <span class="tag">{tag}</span>
+              {
+                tags.length > 0 && (
+                  <div class="technique-tags">
+                    {tags.map((tag) => (
+                      <span class="tag">{tag}</span>
+                    ))}
+                  </div>
+                )
+              }
+            </div>
+          </div>
+        </header>
+
+        <div class="technique-content">
+          <slot />
+        </div>
+
+        {
+          relatedRecipes.length > 0 && (
+            <footer class="related-section">
+              <h2 class="related-title">🍳 Recetas que usan esta técnica</h2>
+              <div class="related-links">
+                {relatedRecipes.map((recipe) => (
+                  <a href={`/recetas/${recipe}`} class="related-link">
+                    {recipe
+                      .replace(/-/g, " ")
+                      .replace(/\b\w/g, (l) => l.toUpperCase())}
+                  </a>
                 ))}
               </div>
-            )}
-          </div>
-        </div>
-      </header>
-
-      <div class="technique-content">
-        <slot />
-      </div>
-
-      {relatedRecipes.length > 0 && (
-        <footer class="related-section">
-          <h2 class="related-title">🍳 Recetas que usan esta técnica</h2>
-          <div class="related-links">
-            {relatedRecipes.map(recipe => (
-              <a href={`/recetas/${recipe}`} class="related-link">
-                {recipe.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-              </a>
-            ))}
-          </div>
-        </footer>
-      )}
-    </article>
-  </main>
-</body>
+            </footer>
+          )
+        }
+      </article>
+    </main>
+  </body>
 </html>
 
 <style>
@@ -111,7 +126,13 @@ const {
   }
 
   body {
-    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family:
+      "Nunito",
+      -apple-system,
+      BlinkMacSystemFont,
+      "Segoe UI",
+      Roboto,
+      sans-serif;
     line-height: 1.6;
     color: #4a5568;
     background: linear-gradient(135deg, #fef7f0 0%, #f7fafc 100%);
@@ -208,12 +229,12 @@ const {
     border-radius: 20px;
     font-size: 0.85rem;
     font-weight: 500;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     margin-bottom: 1rem;
   }
 
   .technique-title {
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     font-size: 2.5rem;
     font-weight: 600;
     color: #6b46c1;
@@ -230,8 +251,6 @@ const {
 
   .technique-stats {
     display: flex;
-    gap: 2rem;
-    margin-bottom: 2rem;
     padding: 1.5rem;
     background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
     border-radius: 16px;
@@ -240,27 +259,27 @@ const {
 
   .stat {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    text-align: center;
+    gap: 0.5rem;
   }
 
   .stat-label {
     font-size: 0.9rem;
     color: #6b46c1;
     font-weight: 500;
-    margin-bottom: 0.25rem;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
+    margin: 0;
   }
 
   .stat-value {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
     font-weight: 600;
     color: #4a5568;
   }
 
   .difficulty-básico {
-    color: #9ae6b4;
+    color: #63C084FF;
   }
 
   .difficulty-intermedio {
@@ -284,7 +303,7 @@ const {
     border-radius: 25px;
     font-size: 0.85rem;
     font-weight: 500;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     box-shadow: 0 2px 8px rgba(159, 122, 234, 0.3);
   }
 
@@ -293,7 +312,7 @@ const {
   }
 
   .technique-content :global(h2) {
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     font-size: 1.5rem;
     font-weight: 600;
     color: #6b46c1;
@@ -303,7 +322,7 @@ const {
   }
 
   .technique-content :global(h3) {
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     font-size: 1.25rem;
     font-weight: 600;
     color: #6b46c1;
@@ -349,7 +368,7 @@ const {
   }
 
   .related-title {
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     font-size: 1.25rem;
     font-weight: 600;
     color: #6b46c1;
@@ -370,7 +389,7 @@ const {
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 500;
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     transition: all 0.3s ease;
     box-shadow: 0 2px 8px rgba(159, 122, 234, 0.3);
   }
@@ -390,7 +409,7 @@ const {
     }
 
     .technique-header-content {
-      flex-direction: column;
+      flex-direction: row;
       gap: 1.5rem;
     }
 
