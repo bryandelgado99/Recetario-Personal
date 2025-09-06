@@ -2,21 +2,23 @@
 export interface Props {
   notes: string[];
   title?: string;
-  type?: 'tip' | 'warning' | 'info';
+  type?: "tip" | "warning" | "info";
 }
 
-const { notes, title = "Notas y consejos", type = 'tip' } = Astro.props;
+const { notes, title = "Notas y consejos", type = "tip" } = Astro.props;
 ---
 
 <section class="notes-section">
   <h2 class="section-title">{title}</h2>
   <div class={`notes-container notes-${type}`}>
-    {notes.map(note => (
-      <div class="note-compose-item">
-        <span class="note-item"></span>
-        <p class="note-text">{note}</p>
-      </div>
-    ))}
+    {
+      notes.map((note) => (
+        <div class="note-compose-item">
+          <span class="note-item" />
+          <p class="note-text">{note}</p>
+        </div>
+      ))
+    }
   </div>
 </section>
 
@@ -26,7 +28,7 @@ const { notes, title = "Notas y consejos", type = 'tip' } = Astro.props;
   }
 
   .section-title {
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     font-size: 1.5rem;
     font-weight: 600;
     color: #8b7355;
@@ -43,7 +45,7 @@ const { notes, title = "Notas y consejos", type = 'tip' } = Astro.props;
     flex-direction: column;
   }
 
-  .note-compose-item{
+  .note-compose-item {
     display: inline-flex;
   }
 

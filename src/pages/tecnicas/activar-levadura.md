@@ -4,7 +4,7 @@ title: "Activación de la Levadura"
 description: "Aprende cómo activar correctamente la levadura para obtener los mejores resultados en tus panes y masas."
 difficulty: "Básico"
 category: "Panadería"
-image: "/images/activar-levadura.jpg"
+image: "/images/activar-levadura.webp"
 tags: ["Levadura", "Panadería", "Técnicas Básicas", "Fermentación"]
 relatedRecipes: ["pan-dulce-cp", "pan-casero"]
 ---
@@ -16,16 +16,19 @@ La activación de levadura es el proceso de "despertar" las células de levadura
 ## Tipos de levadura
 
 ### Levadura fresca (de panadería)
+
 - Se presenta en bloques compactos de color beige
 - Debe conservarse refrigerada
 - Tiene una vida útil de 2-3 semanas
 
 ### Levadura seca activa
+
 - Viene en gránulos pequeños
 - Se conserva a temperatura ambiente
 - Requiere activación antes del uso
 
 ### Levadura instantánea
+
 - Gránulos más finos que la levadura seca
 - No requiere activación previa
 - Se puede mezclar directamente con la harina
@@ -73,11 +76,13 @@ La activación de levadura es el proceso de "despertar" las células de levadura
 ## Problemas comunes
 
 ### La levadura no hace espuma:
+
 - Temperatura incorrecta del líquido
 - Levadura vencida o mal almacenada
 - Agua con cloro (usar agua filtrada)
 
 ### Fermentación lenta:
+
 - Ambiente demasiado frío
 - Poca cantidad de levadura
 - Masa muy salada

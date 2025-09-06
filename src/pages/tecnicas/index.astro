@@ -9,16 +9,54 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Técnicas Culinarias - Recetario</title>
   <meta name="description" content="Aprende técnicas culinarias esenciales para mejorar tus habilidades en la cocina">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <main>
-    <h1>Técnicas Culinarias</h1>
-    <p>Aquí encontrarás guías detalladas sobre técnicas culinarias esenciales.</p>
+  <header class="page-header">
+    <nav class="breadcrumb-nav">
+      <div class="container">
+        <a href="/" class="home-link">🏠 Inicio</a>
+        <span class="separator">→</span>
+        <span class="current">📚 Técnicas</span>
+      </div>
+    </nav>
+  </header>
+
+  <main class="main-container">
+    <div class="hero-section">
+      <h1 class="page-title">Técnicas Culinarias</h1>
+      <p class="page-description">Domina las técnicas fundamentales de la cocina con nuestras guías detalladas paso a paso</p>
+    </div>
     
     <div class="techniques-grid">
       <a href="/tecnicas/activar-levadura" class="technique-card">
-        <h2>Activación de Levadura</h2>
-        <p>Aprende a activar correctamente la levadura para tus panes</p>
+        <div class="card-image">
+          <img src="/images/activar-levadura.webp" alt="Activación de Levadura" />
+        </div>
+        <div class="card-content">
+          <h2>Activación de Levadura</h2>
+          <p>Aprende a activar correctamente la levadura para obtener panes perfectos</p>
+          <div class="card-meta">
+            <span class="difficulty basic">Básico</span>
+            <span class="category">Panadería</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/tecnicas/punto-nieve" class="technique-card">
+        <div class="card-image">
+          <img src="/images/punto-nieve.jpg" alt="Punto de Nieve" />
+        </div>
+        <div class="card-content">
+          <h2>Punto de Nieve</h2>
+          <p>Domina la técnica de montar claras para mousses y merengues perfectos</p>
+          <div class="card-meta">
+            <span class="difficulty basic">Básico</span>
+            <span class="category">Repostería</span>
+          </div>
+        </div>
       </a>
     </div>
   </main>
@@ -26,41 +64,200 @@
 </html>
 
 <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
   body {
-    font-family: system-ui, sans-serif;
+    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: #4a5568;
+    background: linear-gradient(135deg, #fef7f0 0%, #f7fafc 100%);
+    min-height: 100vh;
+  }
+
+  .page-header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #f1c2a7;
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .breadcrumb-nav {
+    font-size: 0.9rem;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .breadcrumb-nav a {
+    color: #8b7355;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .breadcrumb-nav a:hover {
+    color: #d4a574;
+  }
+
+  .separator {
+    margin: 0 0.5rem;
+    color: #a0aec0;
+  }
+
+  .current {
+    color: #718096;
+    font-weight: 500;
+  }
+
+  .main-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
   }
-  
+
+  .hero-section {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem 0;
+  }
+
+  .page-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #8b7355;
+    margin-bottom: 1rem;
+  }
+
+  .page-description {
+    font-size: 1.2rem;
+    color: #718096;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
   .techniques-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
     margin-top: 2rem;
   }
-  
+
   .technique-card {
-    background: white;
-    border-radius: 12px;
-    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
     text-decoration: none;
     color: inherit;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    transition: transform 0.2s;
+    box-shadow: 0 10px 30px rgba(212, 165, 116, 0.15);
+    border: 1px solid rgba(241, 194, 167, 0.3);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
-  
+
   .technique-card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(212, 165, 116, 0.25);
   }
-  
-  .technique-card h2 {
-    margin: 0 0 0.5rem 0;
-    color: #6b46c1;
+
+  .card-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
   }
-  
-  .technique-card p {
-    margin: 0;
-    color: #666;
+
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .technique-card:hover .card-image img {
+    transform: scale(1.05);
+  }
+
+  .card-content {
+    padding: 2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-content h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #8b7355;
+    margin-bottom: 0.75rem;
+  }
+
+  .card-content p {
+    color: #718096;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    flex: 1;
+  }
+
+  .card-meta {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    margin-top: auto;
+  }
+
+  .difficulty {
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .difficulty.basic {
+    background: linear-gradient(135deg, #9ae6b4 0%, #68d391 100%);
+    color: white;
+  }
+
+  .category {
+    color: #d4a574;
+    font-size: 0.85rem;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  @media (max-width: 768px) {
+    .main-container {
+      padding: 1rem;
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+    }
+
+    .techniques-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .card-content {
+      padding: 1.5rem;
+    }
+
+    .card-image {
+      height: 180px;
+    }
   }
 </style>
