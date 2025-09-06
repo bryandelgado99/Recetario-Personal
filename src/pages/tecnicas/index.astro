@@ -1,343 +1,66 @@
 ---
-// Obtener todas las técnicas desde los archivos markdown
-const allTechniques = await Astro.glob('./*.md');
-
-// Procesar las técnicas para extraer la información necesaria
-const techniques = allTechniques
-  .map(technique => {
-    const { frontmatter, url } = technique;
-    
-    return {
-      title: frontmatter.title,
-      description: frontmatter.description,
-      url: url,
-      category: frontmatter.category || 'General',
-      difficulty: frontmatter.difficulty || 'Básico',
-      tags: frontmatter.tags || [],
-      image: frontmatter.image ? `/images/${frontmatter.image}` : null
-    };
-  })
-  .sort((a, b) => a.title.localeCompare(b.title)); // Ordenar alfabéticamente
-
-// Agrupar por categorías
-const categories = techniques.reduce((acc, technique) => {
-  if (!acc[technique.category]) {
-    acc[technique.category] = [];
-  }
-  acc[technique.category].push(technique);
-  return acc;
-}, {} as Record<string, typeof techniques>);
+// Página índice de técnicas
 ---
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Técnicas y Consejos - Mi Recetario</title>
-    <meta
-      name="description"
-      content="Guías y técnicas culinarias para mejorar tus recetas"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <header class="main-header">
-      <div class="container">
-        <nav class="breadcrumb">
-          <a href="/" class="home-link">← Volver al recetario</a>
-        </nav>
-        <h1 class="page-title">📚 Técnicas y Consejos</h1>
-        <p class="page-description">Guías culinarias para perfeccionar tus recetas</p>
-      </div>
-    </header>
-
-    <main class="main-content">
-      <div class="container">
-        {Object.entries(categories).map(([categoryName, categoryTechniques]) => (
-          <section class="category-section">
-            <h2 class="category-title">{categoryName}</h2>
-            <div class="techniques-grid">
-              {categoryTechniques.map((technique) => (
-                <article class="technique-card">
-                  {technique.image && (
-                    <div class="technique-card-image">
-                      <img src={technique.image} alt={technique.title} />
-                    </div>
-                  )}
-                  <div class="technique-card-content">
-                    <h3 class="technique-title">
-                      <a href={technique.url}>{technique.title}</a>
-                    </h3>
-                    <p class="technique-description">{technique.description}</p>
-
-                    <div class="technique-meta">
-                      <span class="technique-difficulty difficulty-{technique.difficulty.toLowerCase()}">
-                        📊 {technique.difficulty}
-                      </span>
-                    </div>
-
-                    <div class="technique-tags">
-                      {technique.tags.map((tag: unknown) => (
-                        <span class="tag">{tag}</span>
-                      ))}
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
-        ))}
-
-        {techniques.length === 0 && (
-          <div class="empty-state">
-            <h2>¡Sección en construcción!</h2>
-            <p>Pronto añadiremos técnicas y consejos útiles para tus recetas.</p>
-          </div>
-        )}
-      </div>
-    </main>
-
-    <footer class="main-footer">
-      <div class="container">
-        <p>&copy; 2025, Paul Delgado</p>
-      </div>
-    </footer>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Técnicas Culinarias - Recetario</title>
+  <meta name="description" content="Aprende técnicas culinarias esenciales para mejorar tus habilidades en la cocina">
+</head>
+<body>
+  <main>
+    <h1>Técnicas Culinarias</h1>
+    <p>Aquí encontrarás guías detalladas sobre técnicas culinarias esenciales.</p>
+    
+    <div class="techniques-grid">
+      <a href="/tecnicas/activar-levadura" class="technique-card">
+        <h2>Activación de Levadura</h2>
+        <p>Aprende a activar correctamente la levadura para tus panes</p>
+      </a>
+    </div>
+  </main>
+</body>
 </html>
 
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
   body {
-    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    line-height: 1.6;
-    color: #4a5568;
-    background: linear-gradient(135deg, #fef7f0 0%, #f7fafc 100%);
-    min-height: 100vh;
-  }
-
-  .container {
+    font-family: system-ui, sans-serif;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 2rem;
   }
-
-  .main-header {
-    background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);
-    color: white;
-    padding: 3rem 0;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .breadcrumb {
-    text-align: left;
-    margin-bottom: 2rem;
-  }
-
-  .home-link {
-    color: rgba(255, 255, 255, 0.9);
-    text-decoration: none;
-    font-weight: 500;
-    font-family: 'Poppins', sans-serif;
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .home-link:hover {
-    color: white;
-    transform: translateX(-2px);
-  }
-
-  .page-title {
-    font-family: 'Poppins', sans-serif;
-    font-size: 3rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-  }
-
-  .page-description {
-    font-size: 1.2rem;
-    opacity: 0.95;
-  }
-
-  .main-content {
-    padding: 3rem 0;
-    min-height: 60vh;
-  }
-
-  .category-section {
-    margin-bottom: 3rem;
-  }
-
-  .category-title {
-    font-family: 'Poppins', sans-serif;
-    font-size: 2rem;
-    font-weight: 600;
-    color: #8b7355;
-    margin-bottom: 2rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 3px solid #d4a574;
-  }
-
+  
   .techniques-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
   }
-
+  
   .technique-card {
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 16px;
-    box-shadow: 0 6px 20px rgba(159, 122, 234, 0.15);
-    overflow: hidden;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(159, 122, 234, 0.2);
-    backdrop-filter: blur(10px);
-  }
-
-  .technique-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 30px rgba(159, 122, 234, 0.25);
-  }
-
-  .technique-card-image {
-    width: 100%;
-    height: 160px;
-    overflow: hidden;
-  }
-
-  .technique-card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-
-  .technique-card:hover .technique-card-image img {
-    transform: scale(1.05);
-  }
-
-  .technique-card-content {
+    background: white;
+    border-radius: 12px;
     padding: 1.5rem;
-  }
-
-  .technique-title {
-    margin-bottom: 0.75rem;
-  }
-
-  .technique-title a {
-    color: #6b46c1;
     text-decoration: none;
-    font-size: 1.25rem;
-    font-weight: 600;
-    font-family: 'Poppins', sans-serif;
-    transition: color 0.3s ease;
+    color: inherit;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
   }
-
-  .technique-title a:hover {
-    color: #9f7aea;
+  
+  .technique-card:hover {
+    transform: translateY(-2px);
   }
-
-  .technique-description {
-    color: #718096;
-    margin-bottom: 1rem;
-    line-height: 1.6;
-    font-size: 0.95rem;
+  
+  .technique-card h2 {
+    margin: 0 0 0.5rem 0;
+    color: #6b46c1;
   }
-
-  .technique-meta {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    font-size: 0.85rem;
-  }
-
-  .technique-difficulty {
-    font-weight: 500;
-    font-family: 'Poppins', sans-serif;
-  }
-
-  .difficulty-básico {
-    color: #9ae6b4;
-  }
-
-  .difficulty-intermedio {
-    color: #f6ad55;
-  }
-
-  .difficulty-avanzado {
-    color: #fc8181;
-  }
-
-  .technique-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
-
-  .tag {
-    background: linear-gradient(135deg, #9f7aea 0%, #805ad5 100%);
-    color: white;
-    padding: 0.3rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    font-weight: 500;
-    font-family: 'Poppins', sans-serif;
-    box-shadow: 0 2px 6px rgba(159, 122, 234, 0.3);
-  }
-
-  .empty-state {
-    text-align: center;
-    padding: 4rem 2rem;
-    color: #718096;
-  }
-
-  .empty-state h2 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    color: #8b7355;
-  }
-
-  .main-footer {
-    background: linear-gradient(135deg, #6b5b73 0%, #553c9a 100%);
-    color: white;
-    padding: 2rem 0;
-    text-align: center;
-    margin-top: 3rem;
-  }
-
-  @media (max-width: 768px) {
-    .container {
-      padding: 0 1rem;
-    }
-
-    .page-title {
-      font-size: 2rem;
-    }
-
-    .techniques-grid {
-      grid-template-columns: 1fr;
-      gap: 1.5rem;
-    }
-
-    .technique-card-content {
-      padding: 1.25rem;
-    }
-
-    .main-content {
-      padding: 2rem 0;
-    }
+  
+  .technique-card p {
+    margin: 0;
+    color: #666;
   }
 </style>
