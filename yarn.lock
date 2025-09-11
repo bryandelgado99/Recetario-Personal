@@ -348,6 +348,11 @@
   resolved "https://registry.yarnpkg.com/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.5.5.tgz#6912b00d2c631c0d15ce1a7ab57cd657f2a8f8ba"
   integrity sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og==
 
+"@lucide/astro@^0.543.0":
+  version "0.543.0"
+  resolved "https://registry.yarnpkg.com/@lucide/astro/-/astro-0.543.0.tgz#d6776b4f20e176530a4f1c887ae1ff20432a2676"
+  integrity sha512-akGyMLRq0qaQWwR9/Be4YNiveIgqEbRin8nz6sYtjR6/ClX2NfRVAHU19A/dCd+4J2LzfUGZ+S/FXD3Ie/Jb9w==
+
 "@oslojs/encoding@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@oslojs/encoding/-/encoding-1.1.0.tgz#55f3d9a597430a01f2a5ef63c6b42f769f9ce34e"

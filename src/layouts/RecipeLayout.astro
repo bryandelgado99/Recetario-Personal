@@ -1,4 +1,6 @@
 ---
+import {ChevronLeft} from "@lucide/astro";
+
 export interface Props {
   title: string;
   description?: string;
@@ -40,7 +42,10 @@ const totalTime = prepTime && cookTime ?
 <body>
   <header class="recipe-header">
     <nav>
-      <a href="/" class="home-link">← Volver al recetario</a>
+      <a href="/" class="home-link">
+        <ChevronLeft />
+          Regresar
+        </a>
     </nav>
   </header>
 
@@ -154,6 +159,7 @@ const totalTime = prepTime && cookTime ?
     transition: all 0.3s ease;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
   }
 

@@ -1,11 +1,11 @@
 ---
 layout: ../../layouts/MarkdownRecipeLayout.astro
-title: "Croissants rellenos (Hojaldrina Ecuatoriana)"
+title: "Croissants rellenos"
 description: "Un tipo de bollo de origen francés caracterizado por su forma de media luna. Con textura hojaldrada y un sabor ligeramente dulce, es crujiente en el exterior y suave en el interior."
 prepTime: "90 min"
 cookTime: "25 min"
 servings: 10
-difficulty: "Avanzada" # Fácil, Intermedio, Difícil
+difficulty: "Intermedio" # Fácil, Intermedio, Difícil
 tags: ["Hojaldrina Ecuatoriana", "Croissants", "Mantequilla"]
 image: "croisants.jpg" # Nombre del archivo en src/assets/ (ej: "mi-receta.jpg")
 ingredients:

@@ -5,7 +5,7 @@ description: "Son un tipo de pasta italiana y se elaboran con patata o platano o
 prepTime: "15 min"
 cookTime: "30 min"
 servings: 10
-difficulty: "Intermedia" # Fácil, Intermedio, Difícil
+difficulty: "Intermedio" # Fácil, Intermedio, Difícil
 tags: ["Harina", "Pasta", "Papa"]
 image: "ñoquis.jpeg" # Nombre del archivo en src/assets/ (ej: "mi-receta.jpg")
 ingredients:
