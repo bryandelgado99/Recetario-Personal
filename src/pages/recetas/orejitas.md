@@ -1,7 +1,7 @@
 ---
 layout: ../../layouts/MarkdownRecipeLayout.astro
 title: "Orejitas"
-description: "Descripción breve y atractiva de la receta"
+description: "Deliciosos dulces hojaldrados con aspecto de orejas, con cubierta parcial de chocolate u otro dulce aderezo."
 prepTime: "90 min"
 cookTime: "30 min"
 servings: 10
